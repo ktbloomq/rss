@@ -26,6 +26,7 @@ public:
     void parseItem(QXmlStreamReader&);
 
 private slots:
+    void openPost(Post* post);
     void openMedia(const QString &postUrl);
     void onFeedSelectionChanged();
     // void onMediaError(QProcess::ProcessError error);

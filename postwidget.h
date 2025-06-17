@@ -25,9 +25,9 @@ private slots:
 private:
     Ui::PostWidget *ui;
     QNetworkAccessManager *networkManager;
-    const Post *post;
+    Post *post;
 signals:
-    void postClicked(const QString &postUrl);
+    void postClicked(Post* post);
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;

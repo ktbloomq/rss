@@ -22,7 +22,7 @@ PostWidget::PostWidget(QWidget *parent, Post *post):
 
     ui->title->setText(post->title);
     ui->description->setText(post->description.left(150)+"...");
-    ui->published->setText(post->published.toString());
+    ui->published->setText(post->published.date().toString());
 
     if (!post->image.isEmpty()) {
         QNetworkRequest request(post->image);
@@ -60,7 +60,7 @@ void PostWidget::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton && !post->link.isEmpty()) {
         // ui->image->setText(post->title);
-        emit postClicked(post->link);
+        emit postClicked(post);
     }
     QWidget::mousePressEvent(event);
 }

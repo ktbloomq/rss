@@ -119,7 +119,7 @@ void MainWindow::populateFeed() {
         std::sort(posts.begin(), posts.end(),[](Post* a, Post* b){return a->published>b->published;});
         for(int i=0; i<posts.length(); i++) {
             PostWidget *postWidget = new PostWidget(this,posts[i]);
-            connect(postWidget, &PostWidget::postClicked, this, &MainWindow::openMedia);
+            connect(postWidget, &PostWidget::postClicked, this, &MainWindow::openPost);
             ui->postWidgetContainer->addWidget(postWidget);
         }
     }
@@ -175,6 +175,12 @@ void MainWindow::clearPosts()
         delete item->widget();
         delete item;
     }
+}
+
+void MainWindow::openPost(Post* post) {
+    PostWidget *postWidget = new PostWidget(this,post);
+    connect(postWidget, &PostWidget::postClicked, this, &MainWindow::openPost);
+    ui->articleContainer->addWidget(postWidget);
 }
 
 void MainWindow::openMedia(const QString &postUrl) {
