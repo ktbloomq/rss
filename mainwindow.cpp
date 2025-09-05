@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "post.h"
 #include "postwidget.h"
+#include "articlewidget.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
 
@@ -10,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent):
     networkManager(new QNetworkAccessManager(this)),
     posts(),
     mediaProcess(new QProcess(this)),
+    // Semaphore standin
     pendingFeedRequests(0)
 {
     ui->setupUi(this);
@@ -109,12 +111,10 @@ void MainWindow::parseItem(QXmlStreamReader &xml) {
     }
     Post *post = new Post(title, description, image, link, published);
     posts.append(post);
-    /*
-
-    */
 }
 
 void MainWindow::populateFeed() {
+    // Don't populate until all feeds are added
     if(pendingFeedRequests==0) {
         std::sort(posts.begin(), posts.end(),[](Post* a, Post* b){return a->published>b->published;});
         for(int i=0; i<posts.length(); i++) {
@@ -178,24 +178,11 @@ void MainWindow::clearPosts()
 }
 
 void MainWindow::openPost(Post* post) {
-    PostWidget *postWidget = new PostWidget(this,post);
-    connect(postWidget, &PostWidget::postClicked, this, &MainWindow::openPost);
-    ui->articleContainer->addWidget(postWidget);
-}
-
-void MainWindow::openMedia(const QString &postUrl) {
-    if (postUrl.isEmpty()) {
-        QMessageBox::warning(this, "Error", "No URL provided for this post.");
-        return;
+    QLayoutItem *item;
+    while ((item = ui->articleContainer->takeAt(0)) != nullptr) {
+        delete item->widget();
+        delete item;
     }
-    // QMessageBox::information(this,"Info",postUrl);
-
-    // Launch MPV with the URL
-    QStringList arguments;
-    arguments << "--force-window" << postUrl;
-    mediaProcess->start("mpv", arguments);
-
-    if (!mediaProcess->waitForStarted(3000)) {
-        QMessageBox::critical(this, "Error", "Failed to start MPV. Ensure MPV is installed and accessible.");
-    }
+    ArticleWidget *articleWidget = new ArticleWidget(this,post);
+    ui->articleContainer->addWidget(articleWidget);
 }

@@ -14,10 +14,10 @@ PostWidget::PostWidget(QWidget *parent):
 PostWidget::PostWidget(QWidget *parent, Post *post):
     QFrame(parent),
     ui(new Ui::PostWidget),
-    networkManager(new QNetworkAccessManager(this))
+    networkManager(new QNetworkAccessManager(this)),
+    post(post)
 {
     ui->setupUi(this);
-    this->post = post;
     connect(networkManager, &QNetworkAccessManager::finished, this, &PostWidget::onImageDownloaded);
 
     ui->title->setText(post->title);

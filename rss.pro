@@ -9,17 +9,20 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    articlewidget.cpp \
     main.cpp \
     mainwindow.cpp \
     post.cpp \
     postwidget.cpp
 
 HEADERS += \
+    articlewidget.h \
     mainwindow.h \
     post.h \
     postwidget.h
 
 FORMS += \
+    articlewidget.ui \
     mainwindow.ui \
     postwidget.ui
 
