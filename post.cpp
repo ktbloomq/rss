@@ -1,6 +1,6 @@
 #include "post.h"
 
-Post::Post(QStringView title, QStringView description, QStringView image, QStringView link, QDateTime published):
+Post::Post(QString title, QString description, QString image, QString link, QDateTime published):
     title(title),
     description(description),
     image(image),

@@ -5,7 +5,7 @@
 class Post
 {
 public:
-    Post(QStringView, QStringView, QStringView, QStringView, QDateTime);
+    Post(QString, QString, QString, QString, QDateTime);
     QString title, description, image, link;
     QDateTime published;
 };
