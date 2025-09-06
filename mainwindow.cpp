@@ -53,7 +53,7 @@ void MainWindow::readRss(QNetworkReply *reply) {
         xml.readNext();
 
         // Look for <item> elements
-        if (xml.isStartElement() && (xml.name() == "entry" || xml.name() == "item")) {
+        if (xml.isStartElement() && (xml.name() == QStringLiteral("entry") || xml.name() == QStringLiteral("item"))) {
             parseItem(xml);
         }
     }
@@ -78,7 +78,7 @@ void MainWindow::parseItem(QXmlStreamReader &xml) {
         xml.readNext();
 
         // Stop if we reach the end of the <item>
-        if (xml.isEndElement() && (xml.name() == "entry" || xml.name() == "item")) {
+        if (xml.isEndElement() && (xml.name() == QStringLiteral("entry") || xml.name() == QStringLiteral("item"))) {
             break;
         }
 
